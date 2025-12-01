@@ -1,5 +1,5 @@
 import { useState } from "react";
-import buscarVagas from "../../../server/controllers/buscarVagas.js";
+import buscarVagas from "../services/api";
 import "./Home.css";
 
 function Home() {
