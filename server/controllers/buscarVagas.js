@@ -3,8 +3,8 @@ import axios from 'axios';
 async function buscarVagas(searchQuery, pais, remoto) {
     const params = new URLSearchParams();
     if (searchQuery) params.append('query', searchQuery);
-    params.append('page', 2);
-    params.append('num_pages', 3)
+    params.append('page', 1);
+    params.append('num_pages', 10);
     params.append('country', pais);
     params.append('language', pais === 'br' ? 'pt' : 'en');
     params.append('work_from_home', remoto);
@@ -13,7 +13,7 @@ async function buscarVagas(searchQuery, pais, remoto) {
         method: 'GET',
         url: 'https://api.openwebninja.com/jsearch/search',
         headers: {
-            'x-api-key': 'ak_oksavvtjj3ywgplhtqndyisohld2skm6mznti3uo8diayqy',
+            'x-api-key': process.env.API_KEY, // ⚠️ Usar variável de ambiente
             'Accept': '*/*'
         },
         params: params
@@ -24,8 +24,8 @@ async function buscarVagas(searchQuery, pais, remoto) {
         console.log(response.data);
         return response.data;
     } catch (error) {
-        console.error("Erro ao buscar vagas:", error.response?.data || error);
-        return null;
+        console.error("Erro ao buscar vagas:", error.response?.data || error.message);
+        return { data: [], error: error.message };
     }
 }
 
